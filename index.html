@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T4D2R200YQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-T4D2R200YQ');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreshMe Center - Lấy Lại Cân Bằng & Chống Burnout</title>
+    
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -402,7 +411,7 @@
             <div class="text-center reveal">
                 <span style="color: var(--primary-teal); font-weight: 700; text-transform: uppercase;">Recovery Zone</span>
                 <h2 style="font-size: 2.5rem; font-weight: 800;">Chọn Nhóm Tuổi Của Bạn</h2>
-                <p style="color: var(--text-sub);">Chúng tôi có các phương pháp riêng biệt cho từng giai đoạn cuộc sống.</p>
+                <p style="color: var(--text-sub);">Phương pháp phù hợp với từng giai đoạn cuộc sống.</p>
             </div>
 
             <div class="age-grid reveal">
@@ -422,6 +431,32 @@
                     <div class="age-icon"><i class="fa-solid fa-briefcase"></i></div>
                     <h3>Trên 30 tuổi</h3>
                     <p>Người đi làm ổn định</p>
+                </div>
+            </div>
+
+            <div class="text-center reveal" style="margin-top: 60px; margin-bottom: 30px; border-top: 2px dashed #cbd5e1; padding-top: 40px;">
+                <span style="color: var(--primary-purple); font-weight: 700; text-transform: uppercase;">Skills & Tools</span>
+                <h2 style="font-size: 2rem; font-weight: 800;">Kỹ Năng Giảm Stress</h2>
+                <p style="color: var(--text-sub);">Các bài tập thực hành giúp bạn lấy lại cân bằng tức thì.</p>
+            </div>
+
+            <div class="age-grid reveal">
+                <div class="age-card" onclick="showRelaxDetail(4)" style="border-color: #14B8A6;">
+                    <div class="age-icon" style="color: #14B8A6;"><i class="fa-solid fa-lungs"></i></div>
+                    <h3>Thở & Ngủ Ngon</h3>
+                    <p>Kỹ thuật điều hòa nhịp tim</p>
+                </div>
+
+                <div class="age-card" onclick="showRelaxDetail(5)" style="border-color: #F43F5E;">
+                    <div class="age-icon" style="color: #F43F5E;"><i class="fa-solid fa-person-walking"></i></div>
+                    <h3>Giãn Cơ (Stretching)</h3>
+                    <p>Giảm đau mỏi vai gáy</p>
+                </div>
+
+                <div class="age-card" onclick="showRelaxDetail(6)" style="border-color: #3B82F6;">
+                    <div class="age-icon" style="color: #3B82F6;"><i class="fa-solid fa-clock"></i></div>
+                    <h3>Quản Lý Thời Gian</h3>
+                    <p>Làm việc hiệu quả hơn</p>
                 </div>
             </div>
         </div>
@@ -805,8 +840,10 @@
         updateChart();
 
         const relaxData = {
+            // --- NHÓM TUỔI CŨ ---
             1: {
                 title: "Nhóm 10-18 tuổi (Học sinh)",
+                badge: "Học Sinh",
                 items: [
                     "Nghe nhạc, xem video giải trí (YouTube, TikTok).",
                     "Chơi thể thao nhẹ (đá bóng, chạy bộ, cầu lông).",
@@ -818,6 +855,7 @@
             },
             2: {
                 title: "Nhóm 19-30 tuổi (Thanh niên)",
+                badge: "Thanh Niên",
                 items: [
                     "Thiền, hít thở sâu, thực hành Mindfulness.",
                     "Gym, yoga, chạy bộ để xả năng lượng.",
@@ -829,6 +867,7 @@
             },
             3: {
                 title: "Nhóm trên 30 tuổi (Trưởng thành)",
+                badge: "Trưởng Thành",
                 items: [
                     "Thiền định sâu, Yoga phục hồi.",
                     "Dành thời gian chất lượng cho gia đình/con cái.",
@@ -837,21 +876,74 @@
                     "Du lịch nghỉ dưỡng cùng gia đình."
                 ],
                 stress: "Áp lực công việc ổn định, tài chính, gia đình. Cần phương pháp: Cân bằng cuộc sống (Work-Life Balance) và tìm kiếm sự tĩnh tâm."
+            },
+            
+            // --- CÁC MỤC KỸ NĂNG MỚI ---
+            4: {
+                title: "Kỹ Thuật Thở & Ngủ Ngon",
+                badge: "Kỹ Năng Thở",
+                items: [
+                    "<b>Phương pháp 4-7-8:</b> Hít vào 4s, nín thở 7s, thở ra bằng miệng 8s. (Giúp ngủ nhanh).",
+                    "<b>Thở Hộp (Box Breathing):</b> Hít 4s - Giữ 4s - Thở ra 4s - Giữ 4s. (Giúp bình tĩnh tức thì).",
+                    "<b>Body Scan (Quét cơ thể):</b> Nằm xuống và thả lỏng từng bộ phận từ ngón chân lên đỉnh đầu.",
+                    "<b>Cai Digital:</b> Tắt điện thoại 30 phút trước khi ngủ để tránh ánh sáng xanh."
+                ],
+                stress: "Tập trung vào việc điều hòa hệ thần kinh, giảm nhịp tim và đưa cơ thể vào trạng thái nghỉ ngơi sâu."
+            },
+            5: {
+                title: "Bài Tập Giãn Cơ (Stretching)",
+                badge: "Vận Động",
+                items: [
+                    "<b>Xoay cổ & vai:</b> Xoay nhẹ nhàng 10 lần mỗi bên để giảm đau mỏi gáy (Dân văn phòng nên làm).",
+                    "<b>Tư thế Em Bé (Child's Pose):</b> Quỳ gối, gập người về phía trước, trán chạm sàn, tay vươn dài.",
+                    "<b>Vươn vai toàn thân:</b> Đứng thẳng, đan tay vươn cao hết cỡ lên trời, kiễng chân.",
+                    "<b>Quy tắc 20-20-20:</b> Cứ 20 phút nhìn màn hình, hãy nhìn xa 20 feet (6m) trong 20 giây."
+                ],
+                stress: "Giúp giải phóng căng thẳng tích tụ trong cơ bắp (Physical Stress), tăng lưu thông máu lên não."
+            },
+            6: {
+                title: "Quản Lý Thời Gian Hiệu Quả",
+                badge: "Productivity",
+                items: [
+                    "<b>Pomodoro:</b> Làm việc tập trung 25 phút - Nghỉ 5 phút. Sau 4 lần thì nghỉ dài 15-30 phút.",
+                    "<b>Ma trận Eisenhower:</b> Phân loại việc thành 4 ô (Quan trọng/Khẩn cấp) để biết nên làm gì trước.",
+                    "<b>Quy tắc 2 phút:</b> Nếu việc gì tốn dưới 2 phút để làm (trả lời mail, rửa cốc...), hãy làm ngay lập tức.",
+                    "<b>Time Blocking:</b> Chia lịch một ngày thành các khối thời gian cố định cho từng đầu việc."
+                ],
+                stress: "Giảm bớt cảm giác 'quá tải' (Overwhelmed) bằng cách chia nhỏ công việc và sắp xếp khoa học."
             }
         };
 
         function showRelaxDetail(groupId) {
+            // Cấu hình các link YouTube cho các nhóm 4, 5, 6
+            const youtubeLinks = {
+                4: "https://youtu.be/j-1n3KJR1I8?si=nnf9Mj1FNP8CkqEM", // Thở & Ngủ Ngon
+                5: "https://youtu.be/S9rk7jnX4PY?si=rHLJxsvH38Pi%C3%ACkim", // Giãn Cơ
+                6: "https://youtu.be/bf2cw7HgaCU?si=ImkFAQq1Ixj-s8dI"  // Quản Lý Thời Gian
+            };
+
+            // Nếu groupId nằm trong danh sách có link YouTube (4, 5, 6)
+            if (youtubeLinks[groupId]) {
+                // Mở link trong tab mới
+                window.open(youtubeLinks[groupId], '_blank'); 
+                return; // Dừng hàm, không chạy tiếp phần hiển thị chi tiết bên dưới
+            }
+
+            // --- Logic cũ giữ nguyên cho các nhóm 1, 2, 3 ---
             const data = relaxData[groupId];
             
-            document.getElementById('detail-badge').innerText = groupId === 1 ? "Học sinh" : (groupId === 2 ? "Thanh niên" : "Người trưởng thành");
+            // Cập nhật nội dung Badge (Nhãn) từ dữ liệu
+            document.getElementById('detail-badge').innerText = data.badge; 
+            
             document.getElementById('detail-title').innerText = data.title;
             document.getElementById('detail-stress').innerText = data.stress;
 
             const list = document.getElementById('detail-list');
             list.innerHTML = '';
+            
             data.items.forEach(item => {
                 const li = document.createElement('li');
-                li.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${item}`;
+                li.innerHTML = `<i class="fa-solid fa-check-circle"></i> <span>${item}</span>`;
                 list.appendChild(li);
             });
 
