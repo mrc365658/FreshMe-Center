@@ -1066,38 +1066,43 @@
         // ==========================================
 // CODE GỬI DỮ LIỆU VỀ GOOGLE SHEET
 // ==========================================
+        // ==========================================
+// CODE GỬI DỮ LIỆU CHUẨN (Đã sửa lỗi lệch cột)
+// ==========================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyUdZ-brqhnOW-sYl_wLgdst3Uh4zW1do66B-gUs44KkYDj7Hi86HHRmiB9pr6W-Y1/exec";
 
         function sendDataToSheet(score, percent, status) {
-            // 1. Lấy dữ liệu từ form
+            // 1. Lấy dữ liệu (Thêm log để kiểm tra)
             const id = document.getElementById('user-id').value || 'Ẩn danh';
-            const age = document.getElementById('user-age').value || 0;
-            const group = document.getElementById('user-group').value || '';
+            const age = document.getElementById('user-age').value || '0';
+            const group = document.getElementById('user-group').value || 'Không rõ';
             
             // Lấy giới tính
-            let gender = '';
+            let gender = 'Chưa chọn';
             const genderEl = document.querySelector('input[name="gender"]:checked');
             if (genderEl) gender = genderEl.value;
 
-            // 2. Đóng gói dữ liệu (Tên bên trái phải KHỚP Y HỆT tên cột đầu tiên trong Sheet)
+            console.log("Dữ liệu chuẩn bị gửi:", { id, age, gender, group, score });
+
+            // 2. Đóng gói dữ liệu (Quan trọng: Tên bên trái phải KHỚP 100% với Header Google Sheet)
             const formData = new FormData();
-            formData.append("Mã ID", id);
-            formData.append("Tuổi", age);
-            formData.append("Giới tính", gender);
-            formData.append("Nhóm", group); 
-            formData.append("Điểm số", score + "/40");
-            formData.append("Kết luận", status);
+            formData.append("Mã ID", id);          // Cột B
+            formData.append("Tuổi", age);          // Cột C
+            formData.append("Giới tính", gender);  // Cột D
+            formData.append("Nhóm", group);        // Cột E
+            formData.append("Điểm số", score + "/40"); // Cột F
+            formData.append("Kết luận", status);   // Cột G
+            
+            // Lưu ý: Cột "Thời gian" (Cột A) do Google Script tự điền, không cần gửi.
 
             // 3. Gửi đi
-            console.log("Đang gửi dữ liệu...");
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 body: formData,
-                mode: 'no-cors' // Quan trọng để không bị chặn
+                mode: 'no-cors'
             })
             .then(() => {
-                console.log("Đã gửi thành công!");
-                // Có thể hiện thông báo nhỏ nếu muốn: alert("Đã lưu kết quả!");
+                console.log("Đã gửi lệnh ghi danh sách!");
             })
             .catch(error => console.error('Lỗi gửi data:', error));
         }
