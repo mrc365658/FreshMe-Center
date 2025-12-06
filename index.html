@@ -1047,6 +1047,7 @@
                 circle.classList.add('color-high'); title.innerText = "Burnout Cao"; title.style.color = "#DC2626";
                 desc.innerText = "Nguy hiểm! Hãy tìm kiếm sự tư vấn chuyên nghiệp.";
             }
+            sendDataToSheet(totalScore, percent, title.innerText);
         }
 
         function resetTest() { startTestFlow(); }
@@ -1062,6 +1063,44 @@
             window.addEventListener('scroll', revealOnScroll);
             revealOnScroll();
         });
+        // ==========================================
+// CODE GỬI DỮ LIỆU VỀ GOOGLE SHEET
+// ==========================================
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyUdZ-brqhnOW-sYl_wLgdst3Uh4zW1do66B-gUs44KkYDj7Hi86HHRmiB9pr6W-Y1/exec";
+
+        function sendDataToSheet(score, percent, status) {
+            // 1. Lấy dữ liệu từ form
+            const id = document.getElementById('user-id').value || 'Ẩn danh';
+            const age = document.getElementById('user-age').value || 0;
+            const group = document.getElementById('user-group').value || '';
+            
+            // Lấy giới tính
+            let gender = '';
+            const genderEl = document.querySelector('input[name="gender"]:checked');
+            if (genderEl) gender = genderEl.value;
+
+            // 2. Đóng gói dữ liệu (Tên bên trái phải KHỚP Y HỆT tên cột đầu tiên trong Sheet)
+            const formData = new FormData();
+            formData.append("Mã ID", id);
+            formData.append("Tuổi", age);
+            formData.append("Giới tính", gender);
+            formData.append("Nhóm", group); 
+            formData.append("Điểm số", score + "/40");
+            formData.append("Kết luận", status);
+
+            // 3. Gửi đi
+            console.log("Đang gửi dữ liệu...");
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Quan trọng để không bị chặn
+            })
+            .then(() => {
+                console.log("Đã gửi thành công!");
+                // Có thể hiện thông báo nhỏ nếu muốn: alert("Đã lưu kết quả!");
+            })
+            .catch(error => console.error('Lỗi gửi data:', error));
+        }
     </script>
 </body>
 </html>
