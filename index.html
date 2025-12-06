@@ -999,25 +999,33 @@
             document.getElementById('progress').style.width = ((currentQIndex) / questions.length) * 100 + '%';
         }
 
-        // --- Cập nhật hàm selectOption ---
+        // Biến khóa để chặn bấm liên tục
+        let isProcessing = false;
+
         function selectOption(score) {
-            // BƯỚC 1: Hiệu ứng Visual Feedback (Phản hồi thị giác)
-            // Lấy phần tử vừa được click (thẻ div .option-item)
-            const selectedElement = event.currentTarget;
+            // Nếu đang xử lý rồi thì chặn, không cho bấm nữa
+            if (isProcessing) return;
             
-            // Thêm class 'selected' để nó hiện màu xanh (theo CSS của bạn)
+            // Bắt đầu khóa
+            isProcessing = true;
+
+            // Hiệu ứng chọn
+            const selectedElement = event.currentTarget;
             selectedElement.classList.add('selected');
 
-            // BƯỚC 2: Xử lý logic sau một khoảng trễ nhỏ (300ms)
-            // Delay giúp người dùng cảm thấy mượt hơn, không bị giật màn hình
+            // Xử lý logic
             setTimeout(() => {
                 totalScore += score;
                 currentQIndex++;
                 
                 if (currentQIndex < questions.length) {
-                    loadQuestion(); // Tải câu tiếp theo (hàm này sẽ tự reset màu ở Bước 1 trên kia)
+                    loadQuestion();
+                    // Mở khóa để làm câu tiếp theo
+                    isProcessing = false; 
                 } else {
-                    showResult(); // Hết câu hỏi thì hiện kết quả
+                    showResult(); 
+                    // Hết câu hỏi rồi thì giữ nguyên khóa (isProcessing = true) 
+                    // để không gửi kết quả lặp lại
                 }
             }, 300); 
         }
