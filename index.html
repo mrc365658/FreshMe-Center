@@ -225,6 +225,108 @@
 
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        /* =========================================
+           MOBILE RESPONSIVE (Dành cho màn hình < 768px)
+           ========================================= */
+        @media (max-width: 768px) {
+            
+            /* 1. Tối ưu Thanh Điều Hướng (Navbar) */
+            .navbar {
+                width: 95%; /* Mở rộng ra 2 bên */
+                padding: 10px 15px;
+                top: 10px;
+                flex-wrap: wrap; /* Cho phép rớt dòng nếu cần */
+                gap: 10px;
+                justify-content: center; /* Căn giữa nội dung */
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+                width: 100%; /* Logo chiếm 1 dòng riêng */
+                justify-content: center;
+                margin-bottom: 5px;
+            }
+
+            /* Ẩn các link text dài, chuyển thành dạng cuộn ngang hoặc gọn hơn */
+            .nav-links {
+                display: flex;
+                gap: 15px;
+                width: 100%;
+                justify-content: center;
+                border-top: 1px solid #eee;
+                padding-top: 10px;
+                margin-top: 5px;
+            }
+
+            .nav-links a {
+                margin-left: 0; /* Xóa margin cũ */
+                font-size: 0.9rem;
+                white-space: nowrap; /* Không xuống dòng chữ */
+            }
+            
+            /* Ẩn nút Test trên Navbar mobile cho đỡ chật (vì Hero banner đã có nút này) */
+            .navbar .btn-primary {
+                display: none; 
+            }
+
+            /* 2. Tối ưu Chữ & Tiêu đề */
+            .hero { padding: 160px 0 40px; } /* Tăng padding top để không bị Navbar che */
+            
+            .hero h1 {
+                font-size: 2rem; /* Giảm từ 3.5rem xuống 2rem */
+                line-height: 1.2;
+                padding: 0 10px;
+            }
+            
+            h2 { font-size: 1.8rem !important; }
+
+            /* 3. Tối ưu Khoảng cách & Grid */
+            .container { padding: 0 16px; }
+            .section-padding { padding: 40px 0; }
+            
+            .entry-section, .age-grid {
+                grid-template-columns: 1fr; /* Xếp chồng dọc 1 cột */
+                gap: 20px;
+            }
+
+            /* Card nhỏ gọn hơn */
+            .entry-card-home, .age-card {
+                padding: 25px 20px;
+                min-height: auto; /* Bỏ chiều cao tối thiểu cứng */
+            }
+
+            /* 4. Tối ưu Form & Input (Tránh bị zoom trên iPhone) */
+            .form-grid { grid-template-columns: 1fr; }
+            
+            .form-input, .diary-input, textarea {
+                font-size: 16px; /* Size chuẩn để iOS không tự zoom khi gõ */
+            }
+            
+            /* Nút bấm to hơn để dễ chạm */
+            .btn {
+                width: 100%; /* Nút full chiều ngang */
+                justify-content: center;
+                padding: 14px;
+            }
+            
+            .options-vertical .option-item {
+                padding: 12px; /* Vùng bấm to hơn */
+                margin-bottom: 8px;
+            }
+
+            /* Phần đánh giá sao & mood to ra để dễ bấm */
+            .star-icon { font-size: 2rem; padding: 0 2px; }
+            .mood-btn { font-size: 2.2rem; margin: 0 5px; }
+
+            /* 5. Tinh chỉnh hiển thị kết quả */
+            .result-score-circle {
+                width: 120px; height: 120px; /* Nhỏ lại chút cho vừa màn hình */
+            }
+            .result-score-circle span { font-size: 2rem; }
+            
+            /* Ẩn bớt các hiệu ứng hover trên mobile (vì không có chuột) */
+            .entry-card-home:hover, .age-card:hover { transform: none; }
+        }
     </style>
 </head>
 <body>
@@ -788,17 +890,44 @@
             loadQuestion();
         }
 
+        // --- Cập nhật hàm loadQuestion ---
         function loadQuestion() {
+            // BƯỚC 1: Reset lại giao diện
+            // Tìm tất cả các ô chọn và xóa class 'selected' (để mất màu xanh)
+            const options = document.querySelectorAll('.option-item');
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // BƯỚC 2: Cập nhật nội dung câu hỏi mới
             document.getElementById('q-current').innerText = currentQIndex + 1;
             document.getElementById('q-text').innerText = questions[currentQIndex];
+            
+            // Cập nhật thanh tiến trình
             document.getElementById('progress').style.width = ((currentQIndex) / questions.length) * 100 + '%';
         }
 
+        // --- Cập nhật hàm selectOption ---
         function selectOption(score) {
-            totalScore += score;
-            currentQIndex++;
-            if (currentQIndex < questions.length) loadQuestion();
-            else showResult();
+            // BƯỚC 1: Hiệu ứng Visual Feedback (Phản hồi thị giác)
+            // Lấy phần tử vừa được click (thẻ div .option-item)
+            const selectedElement = event.currentTarget;
+            
+            // Thêm class 'selected' để nó hiện màu xanh (theo CSS của bạn)
+            selectedElement.classList.add('selected');
+
+            // BƯỚC 2: Xử lý logic sau một khoảng trễ nhỏ (300ms)
+            // Delay giúp người dùng cảm thấy mượt hơn, không bị giật màn hình
+            setTimeout(() => {
+                totalScore += score;
+                currentQIndex++;
+                
+                if (currentQIndex < questions.length) {
+                    loadQuestion(); // Tải câu tiếp theo (hàm này sẽ tự reset màu ở Bước 1 trên kia)
+                } else {
+                    showResult(); // Hết câu hỏi thì hiện kết quả
+                }
+            }, 300); 
         }
 
         function showResult() {
