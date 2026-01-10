@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreshMe Center - Lấy Lại Cân Bằng & Chống Burnout</title>
     
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -458,6 +457,18 @@
                     <h3>Quản Lý Thời Gian</h3>
                     <p>Làm việc hiệu quả hơn</p>
                 </div>
+
+                <div class="age-card" onclick="showRelaxDetail(7)" style="border-color: #8B5CF6;">
+                    <div class="age-icon" style="color: #8B5CF6;"><i class="fa-solid fa-music"></i></div>
+                    <h3>Thực hiện Prodomo</h3>
+                    <p>Tăng sự tập trung</p>
+                </div>
+
+                <div class="age-card" onclick="showRelaxDetail(8)" style="border-color: #F97316;">
+                    <div class="age-icon" style="color: #F97316;"><i class="fa-regular fa-clock"></i></div>
+                    <h3>Phương Pháp Cà Chua</h3>
+                    <p>Kỹ thuật Pomodoro</p>
+                </div>
             </div>
         </div>
     </div>
@@ -478,8 +489,7 @@
 
                 <h3 style="color: var(--primary-blue); font-size: 1.3rem; margin-bottom: 15px;">Phương pháp đề xuất:</h3>
                 <ul class="method-list" id="detail-list">
-                    <!-- Items will be injected here -->
-                </ul>
+                    </ul>
 
                 <div class="stress-box">
                     <h4><i class="fa-solid fa-circle-info"></i> Đặc điểm Stress của nhóm này:</h4>
@@ -568,8 +578,7 @@
                 <div id="diary-history" style="margin-top: 50px;">
                     <h3 style="margin-bottom: 20px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px;">Lịch sử ghi chép</h3>
                     <div id="full-entry-list">
-                        <!-- Entries go here -->
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -915,14 +924,16 @@
         };
 
         function showRelaxDetail(groupId) {
-            // Cấu hình các link YouTube cho các nhóm 4, 5, 6
+            // Cấu hình các link YouTube cho các nhóm 4, 5, 6 và 7, 8 MỚI
             const youtubeLinks = {
                 4: "https://youtu.be/j-1n3KJR1I8?si=nnf9Mj1FNP8CkqEM", // Thở & Ngủ Ngon
                 5: "https://youtu.be/S9rk7jnX4PY?si=rHLJxsvH38Pi%C3%ACkim", // Giãn Cơ
-                6: "https://youtu.be/bf2cw7HgaCU?si=ImkFAQq1Ixj-s8dI"  // Quản Lý Thời Gian
+                6: "https://youtu.be/bf2cw7HgaCU?si=ImkFAQq1Ixj-s8dI",  // Quản Lý Thời Gian
+                7: "https://youtu.be/vm_-taF_CRw?si=aihpeyK6jboUd3Ip", // Nhạc Prodomo (MỚI)
+                8: "https://www.youtube.com/watch?v=o8MHFEpyLwU"      // Phương pháp Cà Chua (MỚI)
             };
 
-            // Nếu groupId nằm trong danh sách có link YouTube (4, 5, 6)
+            // Nếu groupId nằm trong danh sách có link YouTube
             if (youtubeLinks[groupId]) {
                 // Mở link trong tab mới
                 window.open(youtubeLinks[groupId], '_blank'); 
@@ -1071,12 +1082,10 @@
             window.addEventListener('scroll', revealOnScroll);
             revealOnScroll();
         });
+        
         // ==========================================
-// CODE GỬI DỮ LIỆU VỀ GOOGLE SHEET
-// ==========================================
+        // CODE GỬI DỮ LIỆU VỀ GOOGLE SHEET
         // ==========================================
-// CODE GỬI DỮ LIỆU CHUẨN (Đã sửa lỗi lệch cột)
-// ==========================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyUdZ-brqhnOW-sYl_wLgdst3Uh4zW1do66B-gUs44KkYDj7Hi86HHRmiB9pr6W-Y1/exec";
 
         function sendDataToSheet(score, percent, status) {
@@ -1101,8 +1110,6 @@
             formData.append("Điểm số", score + "/40"); // Cột F
             formData.append("Kết luận", status);   // Cột G
             
-            // Lưu ý: Cột "Thời gian" (Cột A) do Google Script tự điền, không cần gửi.
-
             // 3. Gửi đi
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
